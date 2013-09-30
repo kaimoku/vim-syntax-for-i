@@ -13,7 +13,7 @@ sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgLeadComment
 sy match rpgInd /^.\{9}.\{1,2}/hs=s+9 contained contains=rpgNotInd
 sy match rpgFactor1 /^.\{11}.\{1,14}/hs=s+11 contained contains=rpgInd
 sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1
-sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode
+sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,rpgBIF
 sy match rpgResult /^.\{49}.\{1,14}/hs=s+49 contained contains=rpgFactor2
 sy match rpgResultLen /^.\{63}.\{1,5}/hs=s+63 contained contains=rpgResult
 sy match rpgResultDP /^.\{68}.\{1,2}/hs=s+68 contained contains=rpgResultLen
@@ -21,9 +21,12 @@ sy match rpgResultInd /^.\{70}.\{1,6}/hs=s+70 contained contains=rpgResultDP
 sy match rpgTailComment /^.\{80}.*/hs=s+80 contained contains=rpgResultInd
 sy match rpgCspec /^.\{5}C[^*].*$/ transparent contains=@rpgCspecGroup
 
+sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,rpgString,
+        \rpgBIF
+
 sy cluster rpgCspecGroup contains=rpgTailComment,rpgResultInd,rpgResultExt,
-            \rpgResultDP,rpgResultLen,rpgResult,rpgFactor2,rpgOpcode,rpgFactor1,
-	    \rpgInd,rpgNotInd,rpgLeadComment 
+            \rpgResultDP,rpgResultLen,rpgResult,rpgFactor2,rpgOpcode,rpgOpcodeEval,rpgFactor1,
+	    \rpgInd,rpgNotInd,rpgLeadComment,rpgString,rpgFactor2Ext 
 
 sy match rpgDName /^.\{6}.\{1,15}/hs=s+6 contained contains=rpgSpec
 sy match rpgDExternal /^.\{21}.\{1,1}/hs=s+21 contained contains=rpgDName
@@ -109,7 +112,9 @@ hi link rpgNotInd boolean
 hi link rpgInd conditional
 hi link rpgFactor1 type
 hi link rpgOpcode keyword
+hi link rpgOpcodeEval string
 hi link rpgFactor2 type
+hi link rpgFactor2Ext type
 hi link rpgResult function
 hi link rpgResultLen number
 hi link rpgResultDP delimiter
@@ -130,3 +135,18 @@ hi link rpgDKeywords keyword
 hi link rpgDTailComment comment
 hi link rpgInline function
 hi link rpgData comment
+
+
+" my edits
+" string
+syntax region rpgString start=/'/ skip=/''/ end=/'/ oneline
+highlight link rpgString String
+
+" free 
+syntax region rpgfree start="/free" end="/end-free"
+highlight link rpgfree Normal
+
+" BIFs
+setlocal iskeyword+=%
+syntax keyword rpgBIF %trim %char contained
+highlight link rpgBIF Special
