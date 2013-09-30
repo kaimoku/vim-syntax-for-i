@@ -12,8 +12,8 @@ sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgLeadComment
 " sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgSpec
 sy match rpgInd /^.\{9}.\{1,2}/hs=s+9 contained contains=rpgNotInd
 sy match rpgFactor1 /^.\{11}.\{1,14}/hs=s+11 contained contains=rpgInd
-sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1
-sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,rpgBIF
+sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1,rpgOpcodeEval
+sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,@rpgExtras
 sy match rpgResult /^.\{49}.\{1,14}/hs=s+49 contained contains=rpgFactor2
 sy match rpgResultLen /^.\{63}.\{1,5}/hs=s+63 contained contains=rpgResult
 sy match rpgResultDP /^.\{68}.\{1,2}/hs=s+68 contained contains=rpgResultLen
@@ -21,13 +21,17 @@ sy match rpgResultInd /^.\{70}.\{1,6}/hs=s+70 contained contains=rpgResultDP
 sy match rpgTailComment /^.\{80}.*/hs=s+80 contained contains=rpgResultInd
 sy match rpgCspec /^.\{5}C[^*].*$/ transparent contains=@rpgCspecGroup
 
-sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,rpgString,
-        \rpgBIF
+"   for any opcode that allows for extended factor 2
+sy match rpgOpcodeEval /^.\{5}C[^*][ ]\{18}\(eval\|if\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
+sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,@rpgExtras
+
+sy cluster rpgExtras contains=rpgString,rpgBIF,rpgConstants
 
 sy cluster rpgCspecGroup contains=rpgTailComment,rpgResultInd,rpgResultExt,
             \rpgResultDP,rpgResultLen,rpgResult,rpgFactor2,rpgOpcode,rpgOpcodeEval,rpgFactor1,
 	    \rpgInd,rpgNotInd,rpgLeadComment,rpgString,rpgFactor2Ext 
 
+" D-specs
 sy match rpgDName /^.\{6}.\{1,15}/hs=s+6 contained contains=rpgSpec
 sy match rpgDExternal /^.\{21}.\{1,1}/hs=s+21 contained contains=rpgDName
 sy match rpgDDSType /^.\{22}.\{1,1}/hs=s+22 contained contains=rpgDExternal
@@ -36,7 +40,7 @@ sy match rpgDFrom /^.\{25}.\{1,7}/hs=s+25 contained contains=rpgDDeclare
 sy match rpgDToLen /^.\{32}.\{1,7}/hs=s+32 contained contains=rpgDFrom
 sy match rpgDInternal /^.\{39}.\{1,1}/hs=s+39 contained contains=rpgDToLen
 sy match rpgDDecPos /^.\{40}.\{1,2}/hs=s+40 contained contains=rpgDInternal
-sy match rpgDKeywords /^.\{43}.\{1,37}/hs=s+43 contained contains=rpgDDecPos
+sy match rpgDKeywords /^.\{43}.\{1,37}/hs=s+43 contained contains=rpgDDecPos,rpgString
 sy match rpgDTailComment /^.\{80}.*/hs=s+80 contained contains=rpgDKeywords
 sy match rpgDspec /^.\{5}D[^*].*$/ transparent contains=@rpgDspecGroup
 
@@ -112,9 +116,9 @@ hi link rpgNotInd boolean
 hi link rpgInd conditional
 hi link rpgFactor1 type
 hi link rpgOpcode keyword
-hi link rpgOpcodeEval string
+hi link rpgOpcodeEval normal
 hi link rpgFactor2 type
-hi link rpgFactor2Ext type
+hi link rpgFactor2Ext normal
 hi link rpgResult function
 hi link rpgResultLen number
 hi link rpgResultDP delimiter
@@ -139,7 +143,7 @@ hi link rpgData comment
 
 " my edits
 " string
-syntax region rpgString start=/'/ skip=/''/ end=/'/ oneline
+syntax region rpgString start=/'/ skip=/''/ end=/'/ oneline 
 highlight link rpgString String
 
 " free 
@@ -148,5 +152,10 @@ highlight link rpgfree Normal
 
 " BIFs
 setlocal iskeyword+=%
-syntax keyword rpgBIF %trim %char contained
-highlight link rpgBIF Special
+syntax keyword rpgBIF %trim %char %subst %found %eof contained
+highlight link rpgBIF Function
+
+" built in constants
+setlocal iskeyword+=*
+syntax keyword rpgConstants *on *off *blank *blanks contained
+highlight link rpgConstants Special
