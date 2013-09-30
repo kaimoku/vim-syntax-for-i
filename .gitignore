@@ -1,0 +1,10 @@
+# ignore typical IBM i source extensions
+*.dspf
+*.rpgle
+*.sqlrpgle
+*.clle
+*.clp
+*.pf
+*.lf
+*.sql
+*.mbr
