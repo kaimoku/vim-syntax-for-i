@@ -22,7 +22,7 @@ sy match rpgTailComment /^.\{80}.*/hs=s+80 contained contains=rpgResultInd
 sy match rpgCspec /^.\{5}C[^*].*$/ transparent contains=@rpgCspecGroup
 
 "   for any opcode that allows for extended factor 2
-sy match rpgOpcodeEval /^.\{5}C[^*][ ]\{18}\(eval\|if\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
+sy match rpgOpcodeEval /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
 sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,@rpgExtras
 
 sy cluster rpgExtras contains=rpgString,rpgBIF,rpgConstants
