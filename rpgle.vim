@@ -12,7 +12,7 @@ sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgLeadComment
 " sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgSpec
 sy match rpgInd /^.\{9}.\{1,2}/hs=s+9 contained contains=rpgNotInd
 sy match rpgFactor1 /^.\{11}.\{1,14}/hs=s+11 contained contains=rpgInd
-sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1,rpgOpcodeEval
+sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1,rpgOpcodeF2Ext
 sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,@rpgExtras
 sy match rpgResult /^.\{49}.\{1,14}/hs=s+49 contained contains=rpgFactor2
 sy match rpgResultLen /^.\{63}.\{1,5}/hs=s+63 contained contains=rpgResult
@@ -22,13 +22,13 @@ sy match rpgTailComment /^.\{80}.*/hs=s+80 contained contains=rpgResultInd
 sy match rpgCspec /^.\{5}C[^*].*$/ transparent contains=@rpgCspecGroup
 
 "   for any opcode that allows for extended factor 2
-sy match rpgOpcodeEval /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
+sy match rpgOpcodeF2Ext /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
 sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,@rpgExtras
 
 sy cluster rpgExtras contains=rpgString,rpgBIF,rpgConstants
 
 sy cluster rpgCspecGroup contains=rpgTailComment,rpgResultInd,rpgResultExt,
-            \rpgResultDP,rpgResultLen,rpgResult,rpgFactor2,rpgOpcode,rpgOpcodeEval,rpgFactor1,
+            \rpgResultDP,rpgResultLen,rpgResult,rpgFactor2,rpgOpcode,rpgOpcodeF2Ext,rpgFactor1,
 	    \rpgInd,rpgNotInd,rpgLeadComment,rpgString,rpgFactor2Ext 
 
 " D-specs
@@ -116,7 +116,7 @@ hi link rpgNotInd boolean
 hi link rpgInd conditional
 hi link rpgFactor1 type
 hi link rpgOpcode keyword
-hi link rpgOpcodeEval normal
+hi link rpgOpcodeF2Ext normal
 hi link rpgFactor2 type
 hi link rpgFactor2Ext normal
 hi link rpgResult function
