@@ -162,7 +162,7 @@ syntax keyword rpgFreeKeywords acq begsr callp chain clear close commit dealloc 
             \ next on-error open other out post read readc reade readp readpe rel reset
             \ return rolbk select setgt setll sorta test unlock update when write
             \contained
-highlight link rpgFreeKeywords keyword
+highlight link rpgFreeKeywords freekeyword
 
 " BIFs
 setlocal iskeyword+=%
@@ -179,3 +179,6 @@ highlight link rpgBIF Function
 setlocal iskeyword+=*
 syntax keyword rpgConstants *on *off *blank *blanks contained
 highlight link rpgConstants Special
+
+" groups
+highlight freekeyword guifg=yellow
