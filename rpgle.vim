@@ -14,7 +14,7 @@ sy match rpgInd /^.\{9}.\{1,2}/hs=s+9 contained contains=rpgNotInd
 sy match rpgFactor1 /^.\{11}.\{1,14}/hs=s+11 contained contains=rpgInd
 sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1,rpgOpcodeF2Ext
 " for any opcode that allows for extended factor 2
-sy match rpgOpcodeF2Ext /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*/hs=s+35 contains=rpgSpec,rpgOpcode,
+sy match rpgOpcodeF2Ext /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*/hs=s+35 contains=rpgSpec,rpgLeadComment,rpgOpcode,
             \rpgTailCommentF2E,@rpgExtras
 sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,@rpgExtras
 sy match rpgResult /^.\{49}.\{1,14}/hs=s+49 contained contains=rpgFactor2
@@ -150,13 +150,29 @@ hi link rpgData comment
 syntax region rpgString start=/'/ skip=/''/ end=/'/ oneline 
 highlight link rpgString String
 
-" free 
-syntax region rpgfree start="/free" end="/end-free"
-highlight link rpgfree Normal
+" free-format region 
+syntax region rpgFree start=/^.\{5} \/free/ms=e+1 end=/^.\{5} \/end-free/me=s-1 
+            \contains=rpgBIF,rpgString,rpgFreeKeywords,rpgConstants
+highlight link rpgFree normal
+
+" free-format keywords
+syntax keyword rpgFreeKeywords acq begsr callp chain clear close commit dealloc delete
+            \ dou dow dsply dump else elseif enddo endfor endif endmon endsl endsr eval 
+            \ evalr except exfmt exsr feod for force if in iter leave leavesr monitor
+            \ next on-error open other out post read readc reade readp readpe rel reset
+            \ return rolbk select setgt setll sorta test unlock update when write
+            \contained
+highlight link rpgFreeKeywords keyword
 
 " BIFs
 setlocal iskeyword+=%
-syntax keyword rpgBIF %trim %char %subst %found %eof contained
+syntax keyword rpgBIF %abs %addr %alloc %char %check %checkr %date %days %dec %dech %decpos
+            \ %diff %div %editc %editflt %editw %elem %eof %equal %error %float %found %graph
+            \ %hours %int %inth %len %lookup %minutes %months %mseconds %nullind %occur %open
+            \ %paddr %parms %realloc %rem %replace %scan %seconds %shtdn %size %sqrt %status
+            \ %str %subdt %subst %this %time %timestamp %tlookup %trim %triml %trimr %ucs2
+            \ %uns %unsh %xfoot %xlate %years
+            \contained
 highlight link rpgBIF Function
 
 " built in constants
