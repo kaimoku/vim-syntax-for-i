@@ -13,17 +13,20 @@ sy match rpgNotInd /^.\{9}/hs=s+8 contained contains=rpgLeadComment
 sy match rpgInd /^.\{9}.\{1,2}/hs=s+9 contained contains=rpgNotInd
 sy match rpgFactor1 /^.\{11}.\{1,14}/hs=s+11 contained contains=rpgInd
 sy match rpgOpcode /^.\{25}.\{1,10}/hs=s+25 contained contains=rpgFactor1,rpgOpcodeF2Ext
+" for any opcode that allows for extended factor 2
+sy match rpgOpcodeF2Ext /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*/hs=s+35 contains=rpgSpec,rpgOpcode,
+            \rpgTailCommentF2E,@rpgExtras
 sy match rpgFactor2 /^.\{35}.\{1,14}/hs=s+35 contained contains=rpgOpcode,@rpgExtras
 sy match rpgResult /^.\{49}.\{1,14}/hs=s+49 contained contains=rpgFactor2
 sy match rpgResultLen /^.\{63}.\{1,5}/hs=s+63 contained contains=rpgResult
 sy match rpgResultDP /^.\{68}.\{1,2}/hs=s+68 contained contains=rpgResultLen
 sy match rpgResultInd /^.\{70}.\{1,6}/hs=s+70 contained contains=rpgResultDP
 sy match rpgTailComment /^.\{80}.*/hs=s+80 contained contains=rpgResultInd
+sy match rpgTailCommentF2E /^.\{80}.*/hs=s+80 contained contains=rpgOpcodeF2Ext,rpgSpec,@rpgExtras
 sy match rpgCspec /^.\{5}C[^*].*$/ transparent contains=@rpgCspecGroup
 
-"   for any opcode that allows for extended factor 2
-sy match rpgOpcodeF2Ext /^.\{5}C[^*][ ]\{18}\(eval\|if\|callp\).*$/hs=s+35 contains=rpgSpec,rpgOpcode,@rpgExtras
-sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,@rpgExtras
+    
+sy match rpgFactor2Ext /^.\{5}C[^*][ ]\{27}.*$/hs=s+35 contained contains=rpgSpec,rpgTailCommentF2E,@rpgExtras
 
 sy cluster rpgExtras contains=rpgString,rpgBIF,rpgConstants
 
@@ -124,6 +127,7 @@ hi link rpgResultLen number
 hi link rpgResultDP delimiter
 hi link rpgResultInd function
 hi link rpgTailComment comment
+hi link rpgTailCommentF2E comment
 hi link rpgLeadComment comment
 hi link rpgComment comment
 
