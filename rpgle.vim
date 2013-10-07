@@ -152,8 +152,12 @@ highlight link rpgString String
 
 " free-format region 
 syntax region rpgFree start=/^.\{5} \/free/ms=e+1 end=/^.\{5} \/end-free/me=s-1 
-            \contains=rpgBIF,rpgString,rpgFreeKeywords,rpgConstants
+            \contains=rpgBIF,rpgString,rpgFreeKeywords,rpgConstants,rpgFreeComment
 highlight link rpgFree normal
+
+" free-format comments
+syntax match rpgFreeComment /\/\/.*$/ containedin=rpgFree
+highlight link rpgFreeComment comment
 
 " free-format keywords
 syntax keyword rpgFreeKeywords acq begsr callp chain clear close commit dealloc delete
