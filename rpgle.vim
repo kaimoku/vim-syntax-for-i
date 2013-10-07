@@ -182,5 +182,9 @@ setlocal iskeyword+=*
 syntax keyword rpgConstants *on *off *blank *blanks *hival *loval
 highlight link rpgConstants Special
 
+" compile-time arrays
+syntax region CTArray start=/^\*/ end=/([^\n\r]*)$/
+highlight link CTArray comment
+
 " groups
 highlight freekeyword guifg=yellow
