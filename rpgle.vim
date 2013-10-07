@@ -43,7 +43,7 @@ sy match rpgDFrom /^.\{25}.\{1,7}/hs=s+25 contained contains=rpgDDeclare
 sy match rpgDToLen /^.\{32}.\{1,7}/hs=s+32 contained contains=rpgDFrom
 sy match rpgDInternal /^.\{39}.\{1,1}/hs=s+39 contained contains=rpgDToLen
 sy match rpgDDecPos /^.\{40}.\{1,2}/hs=s+40 contained contains=rpgDInternal
-sy match rpgDKeywords /^.\{43}.\{1,37}/hs=s+43 contained contains=rpgDDecPos,rpgString
+sy match rpgDKeywords /^.\{43}.\{1,37}/hs=s+43 contained contains=rpgDDecPos,rpgString,rpgConstants
 sy match rpgDTailComment /^.\{80}.*/hs=s+80 contained contains=rpgDKeywords
 sy match rpgDspec /^.\{5}D[^*].*$/ transparent contains=@rpgDspecGroup
 
@@ -152,11 +152,11 @@ highlight link rpgString String
 
 " free-format region 
 syntax region rpgFree start=/^.\{5} \/free/ms=e+1 end=/^.\{5} \/end-free/me=s-1 
-            \contains=rpgBIF,rpgString,rpgFreeKeywords,rpgConstants,rpgFreeComment
+            \ contains=rpgBIF,rpgString,rpgFreeKeywords,rpgConstants,rpgFreeComment
 highlight link rpgFree normal
 
 " free-format comments
-syntax match rpgFreeComment /\/\/.*$/ containedin=rpgFree
+syntax match rpgFreeComment /\/\/.*$/
 highlight link rpgFreeComment comment
 
 " free-format keywords
@@ -165,7 +165,7 @@ syntax keyword rpgFreeKeywords acq begsr callp chain clear close commit dealloc 
             \ evalr except exfmt exsr feod for force if in iter leave leavesr monitor
             \ next on-error open other out post read readc reade readp readpe rel reset
             \ return rolbk select setgt setll sorta test unlock update when write
-            \contained
+            \ contained
 highlight link rpgFreeKeywords freekeyword
 
 " BIFs
@@ -176,12 +176,12 @@ syntax keyword rpgBIF %abs %addr %alloc %char %check %checkr %date %days %dec %d
             \ %paddr %parms %realloc %rem %replace %scan %seconds %shtdn %size %sqrt %status
             \ %str %subdt %subst %this %time %timestamp %tlookup %trim %triml %trimr %ucs2
             \ %uns %unsh %xfoot %xlate %years
-            \contained
+            \ contained
 highlight link rpgBIF Function
 
 " built in constants
 setlocal iskeyword+=*
-syntax keyword rpgConstants *on *off *blank *blanks contained
+syntax keyword rpgConstants *on *off *blank *blanks *hival *loval
 highlight link rpgConstants Special
 
 " groups
