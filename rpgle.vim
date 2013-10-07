@@ -165,7 +165,6 @@ syntax keyword rpgFreeKeywords acq begsr callp chain clear close commit dealloc 
             \ evalr except exfmt exsr feod for force if in iter leave leavesr monitor
             \ next on-error open other out post read readc reade readp readpe rel reset
             \ return rolbk select setgt setll sorta test unlock update when write
-            \ contained
 highlight link rpgFreeKeywords freekeyword
 
 " BIFs
@@ -176,7 +175,6 @@ syntax keyword rpgBIF %abs %addr %alloc %char %check %checkr %date %days %dec %d
             \ %paddr %parms %realloc %rem %replace %scan %seconds %shtdn %size %sqrt %status
             \ %str %subdt %subst %this %time %timestamp %tlookup %trim %triml %trimr %ucs2
             \ %uns %unsh %xfoot %xlate %years
-            \ contained
 highlight link rpgBIF Function
 
 " built in constants
