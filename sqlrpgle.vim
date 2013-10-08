@@ -1,8 +1,7 @@
 " Vim syntax file
 " Language: SQLRPGLE
-" Uses rpgle.vim for the RPGLE syntax
-
-source rpgle.vim
+" Needs rpgle.vim for the RPGLE syntax - include in syntax.vim file to use
+" both for the sqlrpgle file type
 
 syntax keyword sqlKeywords exec sql set option closqlcsr datfmt commit naming fetch next from
             \ into before relative insert delete values where and or case when then else end
