@@ -20,14 +20,18 @@ highlight link clleString string
 syntax match clleVariable /&[^) ]*/
 highlight link clleVariable identifier
 
-syntax keyword clleControl if do goto enddo else dofor
+syntax keyword clleControl if do goto enddo else dofor return
 highlight link clleControl keyword
 
-syntax keyword clleCommand pgm dcl monmsg chgvar subr endsubr callsubr call endpgm
+syntax keyword clleCommand pgm dcl dclf monmsg chgvar subr endsubr callsubr call endpgm
+            \ rtvjoba rtvneta rcvf rtvusrprf
 highlight link clleCommand keyword
 
 syntax keyword clleProgram sndpgmmsg rmvlible addlible chkobj cpylib rtvdtaara 
-            \ rtvmsg sndpgmmsg rtvjoba ovrprtf
+            \ rtvmsg sndpgmmsg ovrprtf dltf crtpf crtlf clrpfm ovrdbf dltovr cpyf
+            \ crtddmf rclddmcnv crtsavf clrsavf savobj savlib rstobj rstlib ftp cf
+            \ clrlib rgzpfm dspffd chgdtaara ovrmsgf chgjob rmvmsg clof
+            \ sbmjob dspobjd opndbf cpysrcf dltmod movobj crtdtaq dltdtaq
 highlight link clleProgram keyword
 
 setlocal iskeyword+=%
@@ -35,9 +39,10 @@ syntax keyword clleBIF %address %addr %binary %bin %offset %ofs %substring %sst 
 highlight link clleBIF BIF
 
 setlocal iskeyword+=*
-syntax keyword clleChoices *char *dec *int *defined *auto *based 
-            \ *eq *gt *ge *ne *lt *le *and *or *no *yes
-            \ *last *first *dtaara *lib *libl
+syntax keyword clleChoices *char *dec *int *defined *auto *based *blank
+            \ *eq *gt *ge *ne *lt *le *and *or *no *yes *nolist *nomax *nosrc
+            \ *last *first *dtaara *lib *libl *add *replace *savf *all
+            \ *cat *tcat *bcat *ip *lda *mdy *dmy *ymd *prv *ext *status
 highlight link clleChoices preproc 
 
 " groups

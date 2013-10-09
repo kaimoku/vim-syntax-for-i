@@ -35,7 +35,7 @@ sy cluster rpgCspecGroup contains=rpgTailComment,rpgResultInd,rpgResultExt,
 	    \rpgInd,rpgNotInd,rpgLeadComment,rpgString,rpgFactor2Ext 
 
 " D-specs
-sy match rpgDName /^.\{6}.\{1,15}/hs=s+6 contained contains=rpgSpec
+sy match rpgDName /^.\{6}.\{1,15}/hs=s+6 contained contains=rpgSpec,rpgLeadComment
 sy match rpgDExternal /^.\{21}.\{1,1}/hs=s+21 contained contains=rpgDName
 sy match rpgDDSType /^.\{22}.\{1,1}/hs=s+22 contained contains=rpgDExternal
 sy match rpgDDeclare /^.\{23}.\{1,2}/hs=s+23 contained contains=rpgDDSType
@@ -52,7 +52,7 @@ sy cluster rpgDspecGroup contains=rpgDTailComment,rpgDKeywords,rpgDDecPos,
 		\rpgDExternal,rpgDName,rpgLeadComment
 
 " F-Specs...
-sy match rpgFName /^.\{6}.\{1,10}/hs=s+6 contained contains=rpgSpec
+sy match rpgFName /^.\{6}.\{1,10}/hs=s+6 contained contains=rpgSpec,rpgLeadComment
 sy match rpgFType /^.\{16}.\{1,1}/hs=s+16 contained contains=rpgFName
 sy match rpgFDesig /^.\{17}.\{1,1}/hs=s+17 contained contains=rpgFType
 sy match rpgFEoF /^.\{18}.\{1,1}/hs=s+18 contained contains=rpgFDesig
@@ -84,11 +84,11 @@ sy cluster rpgPspecGroup contains=rpgPTailComment,rpgPKeywords,
 		\rpgPBeginEnd,rpgPName,rpgLeadComment
 
 " Until further implemented...
-sy match rpgOtherSpec /^.\{5}[HIO][^*].*$/ contains=rpgSpec
+sy match rpgOtherSpec /^.\{5}[HIO][^*].*$/ contains=rpgSpec,rpgLeadComment
 
 sy match rpgComment /^.\{6}\*.*$/
 
-sy match rpgInline /^.\{6}[/+].*$/
+sy match rpgInline /^.\{6}[/+].*$/ contains=rpgLeadComment
 
 sy region rpgData start=/^\*\* / end=/\Z/
 
